@@ -85,12 +85,12 @@ public class WSPlayer : MonoBehaviour
           break;
 
         case InputType.MOVE:
-          Vector2 force = (_leftController.GetNormalizedPosition2D() + _rightController.GetNormalizedPosition2D()) / 2 * _maxForce;
+          Vector2 force = (_leftController.GetControlInput() + _rightController.GetControlInput()) / 2 * _maxForce;
           _playerBody.AddRelativeForce(force.x, 0, force.y, ForceMode.Force);
           break;
 
         case InputType.ROTATE:
-          float torque = (_leftController.GetNormalizedPosition2D().y - _rightController.GetNormalizedPosition2D().y) / 2 * _maxTorque;
+          float torque = (_leftController.GetControlInput().y - _rightController.GetControlInput().y) / 2 * _maxTorque;
           _playerBody.AddRelativeTorque(0, torque, 0, ForceMode.Force);
           break;
 

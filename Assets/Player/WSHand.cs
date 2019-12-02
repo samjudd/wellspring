@@ -50,8 +50,9 @@ public class WSHand : MonoBehaviour
 
   void Update()
   {
+    // need to do it this way to have the text face the right way
     if (_textMeshRenderer.enabled)
-      _textMeshTransform.LookAt(_centerEye);
+      _textMeshTransform.LookAt(2 * _textMeshTransform.position - _centerEye.position);
   }
 
   void OnUpdatedAnchors()

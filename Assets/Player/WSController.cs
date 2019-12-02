@@ -62,7 +62,7 @@ public class WSController : MonoBehaviour
     Debug.Log("WSController: " + _controller.ToString() +  " homed to: " + _home.ToString("G4"));
     _homeMarker.transform.localScale = (new Vector3(_deadZoneDiameter, _deadZoneDiameter, _deadZoneDiameter)) * 2;
     _homeMarker.transform.position = _cameraRig.transform.TransformPoint(_home);
-    _ctrlRegionMarker.LookAt(_cameraRig.transform);
+    _ctrlRegionMarker.position = _cameraRig.transform.TransformPoint(_home);
     // first time stuff only, unhide all markers and whatnot
     if (!_isHomeSet)
     {
@@ -94,8 +94,7 @@ public class WSController : MonoBehaviour
       _hand.DisplayTextOff();
       _ctrlRegionRadius = (_ctrlRegionVec.x + _ctrlRegionVec.y + _ctrlRegionVec.z) / 3;
       // multiply by 2 to convert radius to diam for scaling purposes
-      _ctrlRegionMarker.localScale = new Vector3(1, 1, 1) * _ctrlRegionRadius * 2;
-      _ctrlRegionMarker.LookAt(_cameraRig.transform);
+      _ctrlRegionMarker.localScale = new Vector3(_ctrlRegionRadius * 2, _ctrlRegionRadius * 2, 1);
       _settingCtrlRegion = false;
       _isCtrlRegionSet = true;
     }
@@ -107,16 +106,17 @@ public class WSController : MonoBehaviour
     return OVRInput.GetLocalControllerPosition(_controller) - _home;
   }
 
-  public Vector3 GetRelativePosition2D()
+  public Vector2 GetRelativePosition2D()
   {
     Vector3 vec = GetRelativePosition();
     return new Vector2(vec.x, vec.z);
   }
 
-  public Vector3 GetNormalizedPosition2D()
+  public Vector2 GetControlInput()
   {
-    Vector3 pos = GetRelativePosition2D();
-    return pos.normalized * Mathf.Clamp01(pos.magnitude / _ctrlRegionRadius);
+    Vector2 pos = GetRelativePosition2D();
+    // pass through filtering function position normalized to 0-1 in input range
+    return pos.normalized * ControlFilter(Mathf.Clamp01(pos.magnitude / _ctrlRegionRadius));
   }
 
   public bool Ready()
@@ -127,5 +127,11 @@ public class WSController : MonoBehaviour
   public bool InDeadZone()
   {
     return GetRelativePosition2D().magnitude <= _deadZoneDiameter;
+  }
+
+  private float ControlFilter(float input)
+  {
+    // i'm thinking like a unit circle with center at (0,1) is the move
+    return 1 - Mathf.Sqrt(1 - Mathf.Pow(input, 2));
   }
 }
