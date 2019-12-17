@@ -40,8 +40,6 @@ sysinfo.txt
 *.vscode
 
 # Installed Unity Packages and .meta files
-*SpaceNavigator/
-*SpaceNavigator.meta
 *Oculus/
 *Oculus.meta
 *Plugins/

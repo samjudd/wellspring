@@ -131,7 +131,7 @@ public class WSController : MonoBehaviour
 
   private float ControlFilter(float input)
   {
-    // i'm thinking like a unit circle with center at (0,1) is the move
+    // unit circle with center at (0,1)
     return 1 - Mathf.Sqrt(1 - Mathf.Pow(input, 2));
   }
 }
