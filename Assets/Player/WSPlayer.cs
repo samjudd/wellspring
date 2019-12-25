@@ -43,7 +43,7 @@ public class WSPlayer : MonoBehaviour
     else
       _cameraRig = CameraRigs[0];
 
-    // Get the CharacterController we're going to use
+    // Get the RigidBody we're going to use
     Rigidbody[] RigidBodies = gameObject.GetComponents<Rigidbody>();
     if (RigidBodies.Length == 0)
       Debug.LogWarning("WSPlayer: No RigidBody attached.");
@@ -54,7 +54,7 @@ public class WSPlayer : MonoBehaviour
     _playerBody.maxAngularVelocity = _maxAngularVelocity;
 
     // Get the player's collider, warn if it is not found for some reason
-    _collider = gameObject.GetComponent<CapsuleCollider>();
+    _collider = transform.GetComponent<CapsuleCollider>();
     if (_collider == null)
     {
       Debug.LogWarning("WSPlayer: Player collider not found.");

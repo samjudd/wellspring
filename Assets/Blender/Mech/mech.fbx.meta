@@ -3,7 +3,22 @@ guid: fe01321ac4a8f604da34ce930e80b32a
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bars Material
+    second: {fileID: 2100000, guid: 42844b104bfc8485180f24affafdad99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base Material
+    second: {fileID: 2100000, guid: 4ab7a0359fd84421aaa51d0596162a3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: a4b56a94fc8194cf78a65e0be36cb85f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

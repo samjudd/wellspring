@@ -39,6 +39,9 @@ sysinfo.txt
 # Visual Studio Code Settings
 *.vscode
 
+# MacOS Stuff
+.DS_Store
+
 # Installed Unity Packages and .meta files
 *Oculus/
 *Oculus.meta
