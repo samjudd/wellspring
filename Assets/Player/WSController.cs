@@ -10,7 +10,7 @@ public class WSController : MonoBehaviour
   public OVRCameraRig _cameraRig = null;
   [SerializeField]
   public OVRInput.Controller _controller;
-
+  private bool _isMechHandController = false;
   private Vector3 _home;
   private GameObject _homeMarker;
   private WSHand _hand;
@@ -37,6 +37,7 @@ public class WSController : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    _isMechHandController = OVRInput.Get(OVRInput.Button.PrimaryHandTrigger, _controller);
     // Top button (B/Y) used to home controller
     if (OVRInput.GetDown(OVRInput.Button.Two, _controller))
     {
@@ -100,6 +101,16 @@ public class WSController : MonoBehaviour
     }
   }
 
+  public Vector3 GetPosition()
+  {
+    return OVRInput.GetLocalControllerPosition(_controller);
+  }
+
+  public Quaternion GetRotation()
+  {
+    return OVRInput.GetLocalControllerRotation(_controller);
+  }
+
   public Vector3 GetRelativePosition()
   {
     // get the location of the controller relative to the home position
@@ -115,8 +126,17 @@ public class WSController : MonoBehaviour
   public Vector2 GetControlInput()
   {
     Vector2 pos = GetRelativePosition2D();
+    // if controller is weapon controller don't return a value for it 
+    if (IsMechHandController())
+      return new Vector2(0.0f, 0.0f);
     // pass through filtering function position normalized to 0-1 in input range
-    return pos.normalized * ControlFilter(Mathf.Clamp01(pos.magnitude / _ctrlRegionRadius));
+    else
+      return pos.normalized * ControlFilter(Mathf.Clamp01(pos.magnitude / _ctrlRegionRadius));
+  }
+
+  public bool IsMechHandController()
+  {
+    return _isMechHandController;
   }
 
   public bool Ready()

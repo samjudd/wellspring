@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class WSHand : MonoBehaviour
 {
-  [SerializeField]
-  protected Transform _centerEye = null;
-
   private Quaternion _anchorOffsetRotation;
   private Vector3 _anchorOffsetPosition;
   private OVRInput.Controller _controller;
@@ -33,7 +30,7 @@ public class WSHand : MonoBehaviour
     // if not warn that it was not found
     else 
     {
-      Debug.LogWarning("WSHand: OVRCameraRig not attached for WSHand" + name);
+      Debug.LogError("WSHand: OVRCameraRig not attached for WSHand" + name);
     }
     // get reference to display text
     _textMeshTransform =  transform.Find("DisplayText");
@@ -42,17 +39,13 @@ public class WSHand : MonoBehaviour
 
     // hide display text
     _textMeshRenderer.enabled = false;
-
-    // check if center eye is set, if not throw warning 
-    if (_centerEye == null)
-      Debug.LogWarning("WSHand: Center eye location not set, text pointing not enabled.");
   }
 
   void Update()
   {
     // need to do it this way to have the text face the right way
     if (_textMeshRenderer.enabled)
-      _textMeshTransform.LookAt(2 * _textMeshTransform.position - _centerEye.position);
+      _textMeshTransform.LookAt(2 * _textMeshTransform.position - _cameraRig.centerEyeAnchor.position);
   }
 
   void OnUpdatedAnchors()
