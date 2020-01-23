@@ -10,6 +10,8 @@ public class WSMechHand : MonoBehaviour
   public Vector3 _mechControllerScaling = new Vector3(3.5f, 3.0f, 3.5f); 
   [Tooltip("Origin for the mech hands.")]
   public Transform _handCenter;
+  [Tooltip("Transform to set the mech hand position relative to.")]
+  public Transform _handRelativeCenter;
   private Quaternion _anchorOffsetRotation;
   private Vector3 _anchorOffsetPosition;
 
@@ -44,11 +46,12 @@ public class WSMechHand : MonoBehaviour
       // use code from OVRGrabber to move the hand objects around
       Vector3 handPos = _controller.GetPosition();
       // get relative position between controller and tracking center
-      //handPos -= _controller._cameraRig.trackingSpace.position;
+      handPos = handPos - _handRelativeCenter.localPosition;
       // scale with scaling vector
       handPos.Scale(_mechControllerScaling);
-      Quaternion handRot = _controller.GetRotation();
       Vector3 destPos = _handCenter.TransformPoint(_anchorOffsetPosition + handPos);
+
+      Quaternion handRot = _controller.GetRotation();
       Quaternion destRot = _handCenter.rotation * handRot * _anchorOffsetRotation;
 
       // no physics needed on the hands for now, these work
