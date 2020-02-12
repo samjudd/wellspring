@@ -8,11 +8,14 @@ public class WSMech : MonoBehaviour
   [SerializeField]
   public float _shakeAmount = 0.1f;
   [SerializeField]
+  public float _shakeFrequency = 10.0f;
+  [SerializeField]
   public float _jumpShakeTime = 0.6f;
   [SerializeField]
   public float _stepShakeTime = 0.2f;
   private Vector3 _originalPos;
-  private bool _isShaking = false;
+  private Task _jumpShake;
+  private Task _stepShake;
 
   void OnEnable()
   {
@@ -21,35 +24,29 @@ public class WSMech : MonoBehaviour
 
   protected IEnumerator ShakeCoroutine(float shakeDuration, Vector3 scale)
   {
-    for(float t = shakeDuration; t > 0.0f; t -= Time.deltaTime)
-    {
-      Vector3 shake = Random.insideUnitSphere * _shakeAmount;
-      shake.Scale(scale);
-      transform.localPosition = _originalPos + shake;
-      yield return null;
-    }
-    _isShaking = false;
-    Debug.Log("WSMech: Shake coroutine ended.");
-    yield break;
+    // * 2 - 1 so it's in range [-1,1] instead of [0,1]
+    float noise = Mathf.PerlinNoise(0, Time.time * _shakeFrequency) * 2.0f - 1.0f;
+    Vector3 shake = new Vector3(noise, noise, noise);
+    shake.Scale(scale);
+    transform.localPosition = _originalPos + shake;
+    yield return new WaitForSeconds(shakeDuration);
   }
 
   public void JumpShake()
   {
-    if (!_isShaking)
+    if (!_jumpShake.Running && !_stepShake.Running)
     {
-      _isShaking = true;
-      Debug.Log("WSMech: Shake coroutine started.");
-      StartCoroutine(ShakeCoroutine(_jumpShakeTime, new Vector3(0f, 1f, 0f)));
+      Debug.Log("WSMech: Jump shake coroutine started.");
+      _jumpShake = new Task(ShakeCoroutine(_jumpShakeTime, new Vector3(0f, _shakeAmount, 0f)));
     }
   }
 
   public void StepShake()
   {
-    if (!_isShaking)
+    if (!_jumpShake.Running && !_stepShake.Running)
     {
-      _isShaking = true;
-      Debug.Log("WSMech: Shake coroutine started.");
-      StartCoroutine(ShakeCoroutine(_stepShakeTime, new Vector3(0f, 1f, 0f)));
+      Debug.Log("WSMech: Step shake coroutine started.");
+      _stepShake = new Task(ShakeCoroutine(_stepShakeTime, new Vector3(0f, _shakeAmount, 0f)));
     }
   }
 }

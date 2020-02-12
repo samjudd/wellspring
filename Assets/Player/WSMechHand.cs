@@ -12,6 +12,10 @@ public class WSMechHand : MonoBehaviour
   public Transform _handCenter;
   [Tooltip("Transform to set the mech hand position relative to.")]
   public Transform _handRelativeCenter;
+  [Tooltip("Whether the mech hands track position relative to the player head or not.")]
+  public bool _useRelativeTracking = false;
+  [Tooltip("Furthest distance from the mech center the hands can go in x,y,z.")]
+  public float _outerLimit = 3.0f;
   private Quaternion _anchorOffsetRotation;
   private Vector3 _anchorOffsetPosition;
 
@@ -46,7 +50,8 @@ public class WSMechHand : MonoBehaviour
       // use code from OVRGrabber to move the hand objects around
       Vector3 handPos = _controller.GetPosition();
       // get relative position between controller and tracking center
-      handPos = handPos - _handRelativeCenter.localPosition;
+      if (_useRelativeTracking)
+        handPos = handPos - _handRelativeCenter.localPosition;
       // scale with scaling vector
       handPos.Scale(_mechControllerScaling);
       Vector3 destPos = _handCenter.TransformPoint(_anchorOffsetPosition + handPos);
@@ -55,7 +60,7 @@ public class WSMechHand : MonoBehaviour
       Quaternion destRot = _handCenter.rotation * handRot * _anchorOffsetRotation;
 
       // no physics needed on the hands for now, these work
-      transform.position = destPos;
+      transform.position = destPos.magnitude <= _outerLimit ? destPos : destPos.normalized * _outerLimit;
       transform.rotation = destRot;
     }
   }
