@@ -53,14 +53,14 @@ public class WSMechHand : MonoBehaviour
       if (_useRelativeTracking)
         handPos = handPos - _handRelativeCenter.localPosition;
       // scale with scaling vector
-      handPos.Scale(_mechControllerScaling);
+      handPos.Scale(_mechControllerScaling); 
       Vector3 destPos = _handCenter.TransformPoint(_anchorOffsetPosition + handPos);
 
       Quaternion handRot = _controller.GetRotation();
       Quaternion destRot = _handCenter.rotation * handRot * _anchorOffsetRotation;
 
       // no physics needed on the hands for now, these work
-      transform.position = destPos.magnitude <= _outerLimit ? destPos : destPos.normalized * _outerLimit;
+      transform.position = destPos;//destPos.magnitude <= _outerLimit ? destPos : destPos.normalized * _outerLimit;
       transform.rotation = destRot;
     }
   }

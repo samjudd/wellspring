@@ -17,9 +17,10 @@ public class WSPlayer : MonoBehaviour
   public float _maxAngularVelocity = 4.0f;
 
   [Tooltip("The amount of force to apply when jumping [N].")]
-  public float _jumpForce = 750.0f;
+  public float _jumpForce = 1000.0f;
   [Tooltip("Percent of max value to adjust to if there is only one hand being used as an input. Should not exceed 1.")]
   public float _singleHandInputFactor = 0.7f;
+
 
   // create enum to classify movement inputs to make things easier
   private enum InputType { NOINPUT, JUMP, MOVE, ROTATE };
@@ -42,6 +43,9 @@ public class WSPlayer : MonoBehaviour
   private WSController _leftController = null;
   private WSController _rightController = null;
   private WSMech _mech = null;
+  private Vector3 _lastPosition;
+  private float _strideLength = 1.5f;
+  private float _distanceSinceLastStride = 0f;
 
   // Awake is called before Start so we can do stuff in Start() with the things we get here
   void Awake()
@@ -81,6 +85,9 @@ public class WSPlayer : MonoBehaviour
 
     // get reference to mech 
     _mech = transform.Find("mech").GetComponent<WSMech>();
+
+    // set last position
+    _lastPosition = transform.position;
   }
 
   // fixedUpdate is called at a constant rate, use for physics/rigidbody stuff
@@ -140,6 +147,21 @@ public class WSPlayer : MonoBehaviour
       case InputType.NOINPUT:
         break;
     }
+
+    // step vibrations
+    if (_mechState == MechState.NOMINAL || _mechState == MechState.GATHERING)
+    {
+      if (_distanceSinceLastStride >= _strideLength)
+      {
+        _distanceSinceLastStride = 0f;
+        _mech.StepShake();
+      }
+      else
+      {
+        _distanceSinceLastStride += (_mech.transform.position - _lastPosition).magnitude;
+      }
+    }
+    _lastPosition = _mech.transform.position;
 
     // limit speed
     _playerBody.velocity = _playerBody.velocity.magnitude > _maxSpeed ? _playerBody.velocity.normalized * _maxSpeed : _playerBody.velocity;
