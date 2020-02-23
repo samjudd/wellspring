@@ -11,17 +11,17 @@ public class WSPlayer : MonoBehaviour
   public float _maxTorque = 400.0f;
 
   [Tooltip("Player speed limit [m/s].")]
-  public float _maxSpeed = 4.0f;
+  public float _maxSpeed = 3.0f;
 
   [Tooltip("Player angular velocity limit [rad/s].")]
   public float _maxAngularVelocity = 4.0f;
 
-  [Tooltip("The amount of force to apply when jumping [N].")]
-  public float _jumpForce = 1000.0f;
+  [Tooltip("Upward velocity to add to the y direction when jumping [m/s].")]
+  public float _jumpVelocity = 4.0f;
   [Tooltip("Percent of max value to adjust to if there is only one hand being used as an input. Should not exceed 1.")]
   public float _singleHandInputFactor = 0.7f;
-
-
+  [Tooltip("Length between footfalls of Mech.")]
+  public float _strideLength = 1.75f;
   // create enum to classify movement inputs to make things easier
   private enum InputType { NOINPUT, JUMP, MOVE, ROTATE };
   // robot states
@@ -44,7 +44,6 @@ public class WSPlayer : MonoBehaviour
   private WSController _rightController = null;
   private WSMech _mech = null;
   private Vector3 _lastPosition;
-  private float _strideLength = 1.5f;
   private float _distanceSinceLastStride = 0f;
 
   // Awake is called before Start so we can do stuff in Start() with the things we get here
@@ -121,8 +120,7 @@ public class WSPlayer : MonoBehaviour
         if (IsInputAllowable(InputType.JUMP))
         {
           _mechState = MechState.GATHERING;
-          Debug.Log("WSPlayer: Jump input executed.");
-          _playerBody.AddRelativeForce(0, _jumpForce, 0, ForceMode.Impulse);
+          _playerBody.AddRelativeForce(0, _jumpVelocity, 0, ForceMode.VelocityChange);
         }
         break;
 
@@ -163,8 +161,10 @@ public class WSPlayer : MonoBehaviour
     }
     _lastPosition = _mech.transform.position;
 
-    // limit speed
-    _playerBody.velocity = _playerBody.velocity.magnitude > _maxSpeed ? _playerBody.velocity.normalized * _maxSpeed : _playerBody.velocity;
+    // limit xz speed (NOT y speed)
+    Vector2 xzVel = new Vector2(_playerBody.velocity.x, _playerBody.velocity.z);
+    if (xzVel.magnitude > _maxSpeed)
+      _playerBody.velocity = new Vector3(xzVel.normalized.x * _maxSpeed, _playerBody.velocity.y, xzVel.normalized.y * _maxSpeed);
   }
 
   InputType classifyInput(Vector2 leftInput, Vector2 rightInput)
@@ -194,8 +194,8 @@ public class WSPlayer : MonoBehaviour
   bool IsGrounded()
   {
     Vector3 position = _collider.transform.position;
-    position.y = _collider.bounds.min.y + 0.1f;
-    float length = 0.3f;
+    position.y = _collider.bounds.min.y + 0.05f;
+    float length = 0.15f;
     // layer 8 should be just the floor so i don't hit the player or something 
     // it uses a bitmask so somehow this does what i want, i don't understand it at all
     return Physics.Raycast(position, -_collider.transform.up, length, 1 << 8);

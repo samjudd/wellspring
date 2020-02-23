@@ -12,9 +12,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c36bf9470e1d4fc6b3833df4441d343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shakeAmount: 0.05
-  _jumpShakeTime: 0.6
+  _jumpShakeAmount: 0.08
+  _stepShakeAmount: 0.04
+  _jumpShakeFrequency: 12
+  _stepShakeFrequency: 7
+  _jumpShakeTime: 0.4
   _stepShakeTime: 0.2
+  _stepSounds:
+  - {fileID: 8300000, guid: 464c1e537793b41d88f5d9d70ff8a86b, type: 3}
+  - {fileID: 8300000, guid: ef195570c9157430e90abc1cad37ee0e, type: 3}
+  _jumpSound: {fileID: 8300000, guid: eaf4f4066e62947ea8bd58d52265f37b, type: 3}
+--- !u!82 &513095383
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2152811874829601584}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ef195570c9157430e90abc1cad37ee0e, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 1
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6025830054062738738
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,6 +127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6025830054062738739}
+  - component: {fileID: 513095382}
   m_Layer: 0
   m_Name: TrackingSpace
   m_TagString: Untagged
@@ -51,6 +155,14 @@ Transform:
   m_Father: {fileID: 6025830055245169522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &513095382
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025830054062738738}
+  m_Enabled: 1
 --- !u!1 &6025830054529912668
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,11 +289,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxForce: 30000
-  _maxTorque: 300
-  _maxSpeed: 2
-  _maxAngularVelocity: 5
-  _jumpForce: 500
+  _maxTorque: 400
+  _maxSpeed: 3
+  _maxAngularVelocity: 4
+  _jumpVelocity: 4
   _singleHandInputFactor: 0.7
+  _strideLength: 1.75
 --- !u!54 &6025830054811120481
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -653,24 +766,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
         type: 3}
-      propertyPath: _controller
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
       propertyPath: _cameraRig
       value: 
       objectReference: {fileID: 6025830055245169521}
     - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
         type: 3}
-      propertyPath: _centerEye
-      value: 
-      objectReference: {fileID: 6025830055193470884}
-    - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _trackingCenter
-      value: 
-      objectReference: {fileID: 6025830054699947573}
+      propertyPath: _controller
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5923703583501448921, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
         type: 3}
       propertyPath: m_Name
@@ -730,46 +833,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _parentTransform
-      value: 
-      objectReference: {fileID: 6025830055245169522}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _controller
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _cameraRig
-      value: 
-      objectReference: {fileID: 6025830055245169521}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _centerEye
-      value: 
-      objectReference: {fileID: 6025830055193470885}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _cameraRig
-      value: 
-      objectReference: {fileID: 6025830055245169521}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _parentTransform
-      value: 
-      objectReference: {fileID: 6025830055245169522}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _centerEye
-      value: 
-      objectReference: {fileID: 6025830055193470885}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _controller
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed57cbc9e9e71954b8651d478fcdeb2b, type: 3}
@@ -1000,24 +1063,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
         type: 3}
-      propertyPath: _controller
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
       propertyPath: _cameraRig
       value: 
       objectReference: {fileID: 6025830055245169521}
     - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
         type: 3}
-      propertyPath: _centerEye
-      value: 
-      objectReference: {fileID: 6025830055193470884}
-    - target: {fileID: 3161378187606935582, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _trackingCenter
-      value: 
-      objectReference: {fileID: 6025830054699947573}
+      propertyPath: _controller
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5923703583501448921, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
         type: 3}
       propertyPath: m_Name
@@ -1077,46 +1130,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _controller
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _parentTransform
-      value: 
-      objectReference: {fileID: 6025830055245169522}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _cameraRig
-      value: 
-      objectReference: {fileID: 6025830055245169521}
-    - target: {fileID: 5923703583501448923, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _centerEye
-      value: 
-      objectReference: {fileID: 6025830055193470885}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _cameraRig
-      value: 
-      objectReference: {fileID: 6025830055245169521}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _parentTransform
-      value: 
-      objectReference: {fileID: 6025830055245169522}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _centerEye
-      value: 
-      objectReference: {fileID: 6025830055193470885}
-    - target: {fileID: 6161369567047383496, guid: ed57cbc9e9e71954b8651d478fcdeb2b,
-        type: 3}
-      propertyPath: _controller
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed57cbc9e9e71954b8651d478fcdeb2b, type: 3}
@@ -1204,11 +1217,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: mech
-      objectReference: {fileID: 0}
-    - target: {fileID: 2336126930479514483, guid: fe01321ac4a8f604da34ce930e80b32a,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe01321ac4a8f604da34ce930e80b32a, type: 3}
