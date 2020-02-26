@@ -276,6 +276,8 @@ MonoBehaviour:
   _mechControllerScaling: {x: 3, y: 3, z: 3}
   _handCenter: {fileID: 0}
   _handRelativeCenter: {fileID: 0}
+  _useRelativeTracking: 0
+  _outerLimit: 3
 --- !u!33 &1471000339598992860
 MeshFilter:
   m_ObjectHideFlags: 0
