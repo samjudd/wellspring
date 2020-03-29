@@ -31,6 +31,7 @@ public class WSPlasmaSwordBeam : MonoBehaviour
     RaycastHit hit;
     if (Physics.Raycast(_raycastPoint.position, _raycastPoint.TransformDirection(Vector3.up), out hit, _beamLength, _layerMask))
     {
+      Debug.Log("Raycast hit on beam " + this.name);
       // don't shorten if you hit opponent, just deal damage to them
       if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Opponent"))
       {

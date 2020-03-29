@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WSCubeOfDoom : MonoBehaviour
 {
@@ -11,27 +9,31 @@ public class WSCubeOfDoom : MonoBehaviour
   private float _height = 0.5f;
   private float _health = 100.0f;
   private MeshRenderer _meshRenderer;
+  private Rigidbody _rigidBody;
   private Color _originalColor;
+  private Vector3 _originalPosition;
 
   void Start()
   {
     _meshRenderer = GetComponent<MeshRenderer>();
+    _rigidBody = GetComponent<Rigidbody>();
+    _originalPosition = transform.position;
   }
 
   void Update()
   {
-    //get the objects current position and put it in a variable so we can access it later with less code
-    Vector3 pos = transform.position;
     //calculate what the new Y position will be
-    float newY = Mathf.Sin(Time.time * _speed);
-    //set the object's Y to the new calculated Y
-    transform.position = new Vector3(pos.x, newY, pos.z) * _height;
+    float yOffset = Mathf.Sin(Time.time * _speed) * _height;
+    //calculate new position and move to it
+    Vector3 newPosition = new Vector3(_originalPosition.x, _originalPosition.y + yOffset, _originalPosition.z);
+    _rigidBody.MovePosition(newPosition);
   }
 
   public void Damage(float damageValue)
   {
     _health -= damageValue;
     _meshRenderer.material.color = Color.red;
+    Debug.Log(damageValue.ToString() + " damage taken by " + name + ".");
     if (_health <= 0.0f)
       Destroy(gameObject);
     else
