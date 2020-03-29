@@ -196,9 +196,7 @@ public class WSPlayer : MonoBehaviour
     Vector3 position = _collider.transform.position;
     position.y = _collider.bounds.min.y + 0.05f;
     float length = 0.15f;
-    // layer 8 should be just the floor so i don't hit the player or something 
-    // it uses a bitmask so somehow this does what i want, i don't understand it at all
-    return Physics.Raycast(position, -_collider.transform.up, length, 1 << 8);
+    return Physics.Raycast(position, -_collider.transform.up, length, LayerMask.GetMask("Floor"));
   }
 
   bool IsInputAllowable(InputType input)

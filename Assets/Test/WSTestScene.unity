@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 677687843}
   - component: {fileID: 677687842}
   - component: {fileID: 677687841}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wall 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 1694179352}
   - component: {fileID: 1694179351}
   - component: {fileID: 1694179350}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -700,7 +700,7 @@ GameObject:
   - component: {fileID: 1802051175}
   - component: {fileID: 1802051174}
   - component: {fileID: 1802051173}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 2096125009}
   - component: {fileID: 2096125008}
   - component: {fileID: 2096125007}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wall 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,3 +872,72 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &7372583716118955687
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054585958830102909, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7225755111280265029, guid: 0c0c147f150ce4d7b8508176542d53fa,
+        type: 3}
+      propertyPath: m_Name
+      value: The Cube of DOOM
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0c0c147f150ce4d7b8508176542d53fa, type: 3}
