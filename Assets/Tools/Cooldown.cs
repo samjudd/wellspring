@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Cooldown : MonoBehaviour
+public class Cooldown
 {
   private float _cooldownTime;
   private float _timer;
@@ -12,11 +10,15 @@ public class Cooldown : MonoBehaviour
     _cooldownTime = cooldownTime;
     _timer = 0.0f;
   }
-  // Update is called once per frame
-  void Update()
+  // have to actually call this in the class you're using it since this isn't a monobehavior 
+  // maybe coroutines 
+  // maybe invoke? 
+  // will have to figure out the resetting cooldown thing
+  public void Update()
   {
+    Debug.Log("WSCooldownUtil: " + _timer.ToString());
     if (OnCooldown())
-      _timer -= Time.deltaTime;
+      _timer -= Time.deltaTime; 
   }
 
   public bool OnCooldown()

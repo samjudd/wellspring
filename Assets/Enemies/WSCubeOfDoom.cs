@@ -4,10 +4,10 @@ public class WSCubeOfDoom : MonoBehaviour
 {
   public float _flashTime = 0.1f;
   //adjust this to change speed
-  private float _speed = 5f;
+  public float _bobSpeed = 5f;
   //adjust this to change how high it goes
-  private float _height = 0.5f;
-  private float _health = 100.0f;
+  public float _bobHeight = 0.5f;
+  public float _health = 100.0f;
   private MeshRenderer _meshRenderer;
   private Rigidbody _rigidBody;
   private Color _originalColor;
@@ -18,12 +18,13 @@ public class WSCubeOfDoom : MonoBehaviour
     _meshRenderer = GetComponent<MeshRenderer>();
     _rigidBody = GetComponent<Rigidbody>();
     _originalPosition = transform.position;
+    _originalColor = _meshRenderer.material.color;
   }
 
   void Update()
   {
     //calculate what the new Y position will be
-    float yOffset = Mathf.Sin(Time.time * _speed) * _height;
+    float yOffset = Mathf.Sin(Time.time * _bobSpeed) * _bobHeight;
     //calculate new position and move to it
     Vector3 newPosition = new Vector3(_originalPosition.x, _originalPosition.y + yOffset, _originalPosition.z);
     _rigidBody.MovePosition(newPosition);
@@ -33,7 +34,7 @@ public class WSCubeOfDoom : MonoBehaviour
   {
     _health -= damageValue;
     _meshRenderer.material.color = Color.red;
-    Debug.Log(damageValue.ToString() + " damage taken by " + name + ".");
+    Debug.Log("WSCubeOfDoom " + damageValue.ToString() + " damage taken by " + name + ".");
     if (_health <= 0.0f)
       Destroy(gameObject);
     else

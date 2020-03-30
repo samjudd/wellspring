@@ -127,7 +127,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6025830054062738739}
-  - component: {fileID: 513095382}
   m_Layer: 0
   m_Name: TrackingSpace
   m_TagString: Untagged
@@ -155,14 +154,6 @@ Transform:
   m_Father: {fileID: 6025830055245169522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &513095382
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6025830054062738738}
-  m_Enabled: 1
 --- !u!1 &6025830054529912668
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,7 +927,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: WSPlasmaSword
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5447195436280590357, guid: 8e1520e146a6b483fbf906095dfaf762, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8e1520e146a6b483fbf906095dfaf762, type: 3}
 --- !u!4 &1690362698007590764 stripped
 Transform:
