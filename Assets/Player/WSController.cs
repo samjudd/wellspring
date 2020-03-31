@@ -6,9 +6,7 @@ public class WSController : MonoBehaviour
 {
   [Tooltip("Boundary of the input dead zone. Controls how much leeway there is in moving the controller before movement starts.")]
   protected float _deadZoneDiameter = 0.05f;
-  [SerializeField]
   public OVRCameraRig _cameraRig = null;
-  [SerializeField]
   public OVRInput.Controller _controller;
   private bool _isMechHandController = false;
   private Vector3 _home;
